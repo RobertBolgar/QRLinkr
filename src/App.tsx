@@ -1,6 +1,6 @@
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
-import { QRGeneratorPlaceholder } from './components/QRGeneratorPlaceholder';
+import { QRGenerator } from './components/QRGenerator';
 import { Footer } from './components/Footer';
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
             width: '100%',
           }}
         >
-          <QRGeneratorPlaceholder />
+          <QRGenerator />
         </div>
       </main>
       <Footer />
