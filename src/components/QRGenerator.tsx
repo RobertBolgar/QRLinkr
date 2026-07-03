@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { QrCode, Sparkles } from 'lucide-react';
+import { QrCode } from 'lucide-react';
 import { Card } from './Card';
 import { Input } from './Input';
 import { Button } from './Button';
@@ -103,245 +103,230 @@ export const QRGenerator: React.FC = () => {
   };
 
   return (
-    <div
-      className="qr-generator-layout"
+    <Card
       style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: 'var(--spacing-8)',
-        alignItems: 'start',
+        padding: 'var(--spacing-8)',
       }}
     >
-      <Card
+      <div
+        className="qr-generator-layout"
         style={{
-          minHeight: '500px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 'var(--spacing-6)',
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: 'var(--spacing-8)',
+          alignItems: 'start',
         }}
       >
-        <div>
-          <h2
-            style={{
-              fontSize: '1.5rem',
-              fontWeight: 600,
-              marginBottom: 'var(--spacing-2)',
-              fontFamily: 'var(--font-heading)',
-            }}
-          >
-            QR Generator
-          </h2>
-          <p
-            style={{
-              fontSize: '0.875rem',
-              color: 'var(--color-text-secondary)',
-              lineHeight: 1.5,
-            }}
-          >
-            Enter your website URL below to generate a high-quality QR code instantly.
-          </p>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 'var(--spacing-2)',
-            }}
-          >
-            <label
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-6)' }}>
+          <div>
+            <h2
+              style={{
+                fontSize: '1.25rem',
+                fontWeight: 600,
+                marginBottom: 'var(--spacing-1)',
+                fontFamily: 'var(--font-heading)',
+                color: 'var(--color-text-primary)',
+              }}
+            >
+              QR Generator
+            </h2>
+            <p
               style={{
                 fontSize: '0.875rem',
-                fontWeight: 500,
                 color: 'var(--color-text-secondary)',
+                lineHeight: 1.5,
               }}
             >
-              QR Type
-            </label>
-            <div
-              role="radiogroup"
-              aria-label="QR Type Selection"
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
-                gap: 'var(--spacing-2)',
-              }}
-            >
-              {['URL', 'Text', 'Email'].map((type) => (
-                <button
-                  key={type}
-                  role="radio"
-                  aria-checked={type === 'URL'}
-                  disabled={type !== 'URL'}
-                  aria-disabled={type !== 'URL'}
-                  style={{
-                    padding: 'var(--spacing-3)',
-                    borderRadius: 'var(--radius-input)',
-                    backgroundColor: type === 'URL' 
-                      ? 'var(--color-accent)' 
-                      : 'var(--color-background-surface)',
-                    border: type === 'URL' 
-                      ? '1px solid var(--color-accent)' 
-                      : '1px solid var(--color-border)',
-                    color: type === 'URL' 
-                      ? 'white' 
-                      : 'var(--color-text-muted)',
-                    fontSize: '0.875rem',
-                    fontWeight: 500,
-                cursor: type === 'URL' ? 'pointer' : 'not-allowed',
-                opacity: type === 'URL' ? 1 : 0.5,
-                transition: 'all 150ms ease',
-              }}
-                >
-                  {type}
-                </button>
-              ))}
-            </div>
+              Enter your website URL to generate a QR code.
+            </p>
           </div>
 
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 'var(--spacing-2)',
-            }}
-          >
-            <label
-              style={{
-                fontSize: '0.875rem',
-                fontWeight: 500,
-                color: 'var(--color-text-secondary)',
-              }}
-            >
-              Website URL
-            </label>
-            <Input
-              type="url"
-              placeholder="https://example.com"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              style={{
-                minHeight: '48px',
-              }}
-            />
-            {error && (
-              <p
-                style={{
-                  fontSize: '0.875rem',
-                  color: 'var(--color-error)',
-                  marginTop: 'var(--spacing-1)',
-                }}
-              >
-                {error}
-              </p>
-            )}
-          </div>
-        </div>
-      </Card>
-
-      <Card
-        style={{
-          minHeight: '500px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 'var(--spacing-6)',
-          background: 'linear-gradient(135deg, var(--color-background-card) 0%, rgba(255, 107, 44, 0.03) 100%)',
-        }}
-      >
-        <div
-          style={{
-            position: 'relative',
-            width: '280px',
-            height: '280px',
-            borderRadius: 'var(--radius-card)',
-            background: 'linear-gradient(135deg, var(--color-background-surface) 0%, var(--color-background-card) 100%)',
-            border: '1px solid var(--color-border)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 4px 24px rgba(0, 0, 0, 0.2)',
-            overflow: 'hidden',
-          }}
-          role="img"
-          aria-label={qrDataUrl ? `QR code for ${url}` : 'QR code preview'}
-        >
-          {qrDataUrl ? (
-            <img
-              src={qrDataUrl}
-              alt={`QR code for ${url}`}
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'contain',
-                padding: 'var(--spacing-4)',
-              }}
-            />
-          ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-5)' }}>
             <div
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center',
-                gap: 'var(--spacing-3)',
-                color: 'var(--color-text-muted)',
+                gap: 'var(--spacing-2)',
               }}
-              aria-live="polite"
             >
-              <QrCode size={64} style={{ opacity: 0.3 }} aria-hidden="true" />
-              <span style={{ fontSize: '0.875rem', fontWeight: 500 }}>
-                {isGenerating ? 'Generating...' : 'QR Preview'}
-              </span>
+              <label
+                style={{
+                  fontSize: '0.75rem',
+                  fontWeight: 600,
+                  color: 'var(--color-text-secondary)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                }}
+              >
+                QR Type
+              </label>
+              <div
+                role="radiogroup"
+                aria-label="QR Type Selection"
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(3, 1fr)',
+                  gap: 'var(--spacing-1)',
+                  padding: 'var(--spacing-1)',
+                  backgroundColor: 'var(--color-background-surface)',
+                  borderRadius: 'var(--radius-input)',
+                  border: '1px solid var(--color-border)',
+                }}
+              >
+                {['URL', 'Text', 'Email'].map((type) => (
+                  <button
+                    key={type}
+                    role="radio"
+                    aria-checked={type === 'URL'}
+                    disabled={type !== 'URL'}
+                    aria-disabled={type !== 'URL'}
+                    style={{
+                      padding: 'var(--spacing-2)',
+                      borderRadius: 'calc(var(--radius-input) - 2px)',
+                      backgroundColor: type === 'URL' 
+                        ? 'var(--color-background-card)' 
+                        : 'transparent',
+                      border: 'none',
+                      color: type === 'URL' 
+                        ? 'var(--color-text-primary)' 
+                        : 'var(--color-text-muted)',
+                      fontSize: '0.875rem',
+                      fontWeight: 500,
+                      cursor: type === 'URL' ? 'pointer' : 'not-allowed',
+                      transition: 'all 150ms ease',
+                    }}
+                  >
+                    {type}
+                  </button>
+                ))}
+              </div>
             </div>
-          )}
-          {qrDataUrl && (
+
             <div
               style={{
-                position: 'absolute',
-                top: 'var(--spacing-3)',
-                right: 'var(--spacing-3)',
-                width: '32px',
-                height: '32px',
-                borderRadius: '50%',
-                background: 'linear-gradient(135deg, var(--color-accent) 0%, #ff8c5a 100%)',
                 display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 2px 8px rgba(255, 107, 44, 0.3)',
+                flexDirection: 'column',
+                gap: 'var(--spacing-2)',
               }}
             >
-              <Sparkles size={16} style={{ color: 'white' }} />
+              <label
+                style={{
+                  fontSize: '0.75rem',
+                  fontWeight: 600,
+                  color: 'var(--color-text-secondary)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                }}
+              >
+                Website URL
+              </label>
+              <Input
+                type="url"
+                placeholder="https://example.com"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+              />
+              {error && (
+                <p
+                  style={{
+                    fontSize: '0.75rem',
+                    color: 'var(--color-error)',
+                  }}
+                >
+                  {error}
+                </p>
+              )}
             </div>
-          )}
+          </div>
         </div>
 
         <div
           style={{
             display: 'flex',
-            gap: 'var(--spacing-3)',
-            width: '100%',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 'var(--spacing-4)',
           }}
         >
-          <Button
-            variant="secondary"
-            onClick={handleDownloadPNG}
-            disabled={!qrDataUrl}
-            style={{ flex: 1 }}
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 'var(--spacing-4)',
+              padding: 'var(--spacing-6)',
+              backgroundColor: 'var(--color-background-surface)',
+              borderRadius: 'var(--radius-card)',
+              border: '1px solid var(--color-border)',
+            }}
           >
-            Download PNG
-          </Button>
-          <Button
-            variant="primary"
-            onClick={handleDownloadSVG}
-            disabled={!qrDataUrl || isDownloadingSVG}
-            style={{ flex: 1 }}
-          >
-            {isDownloadingSVG ? 'Downloading...' : 'Download SVG'}
-          </Button>
+            <div
+              style={{
+                position: 'relative',
+                width: '200px',
+                height: '200px',
+                borderRadius: 'var(--radius-input)',
+                backgroundColor: '#FFFFFF',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
+              }}
+              role="img"
+              aria-label={qrDataUrl ? `QR code for ${url}` : 'QR code preview'}
+            >
+              {qrDataUrl ? (
+                <img
+                  src={qrDataUrl}
+                  alt={`QR code for ${url}`}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                    padding: 'var(--spacing-3)',
+                  }}
+                />
+              ) : (
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 'var(--spacing-2)',
+                    color: '#A1A1AA',
+                  }}
+                  aria-live="polite"
+                >
+                  <QrCode size={48} style={{ opacity: 0.3 }} aria-hidden="true" />
+                  <span style={{ fontSize: '0.75rem', fontWeight: 500 }}>
+                    {isGenerating ? 'Generating...' : 'Preview'}
+                  </span>
+                </div>
+              )}
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-2)', width: '100%' }}>
+              <Button
+                variant="primary"
+                onClick={handleDownloadPNG}
+                disabled={!qrDataUrl}
+                style={{ width: '100%' }}
+              >
+                Download PNG
+              </Button>
+              <Button
+                variant="secondary"
+                onClick={handleDownloadSVG}
+                disabled={!qrDataUrl || isDownloadingSVG}
+                style={{ width: '100%' }}
+              >
+                {isDownloadingSVG ? 'Downloading...' : 'Download SVG'}
+              </Button>
+            </div>
+          </div>
         </div>
-      </Card>
-    </div>
+      </div>
+    </Card>
   );
 };

@@ -22,16 +22,16 @@ export const Button: React.FC<ButtonProps> = ({
     justifyContent: 'center',
     gap: 'var(--spacing-2)',
     cursor: props.disabled ? 'not-allowed' : 'pointer',
-    opacity: props.disabled ? 0.5 : 1,
+    opacity: props.disabled ? 0.4 : 1,
     ...(variant === 'primary' && {
       backgroundColor: 'var(--color-accent)',
       color: 'white',
       border: 'none',
     }),
     ...(variant === 'secondary' && {
-      backgroundColor: 'var(--color-background-surface)',
-      border: '1px solid var(--color-border)',
-      color: 'var(--color-text-primary)',
+      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      border: '1px solid rgba(255, 255, 255, 0.2)',
+      color: 'white',
     }),
     ...(variant === 'ghost' && {
       backgroundColor: 'transparent',

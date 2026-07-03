@@ -8,30 +8,35 @@
   }
   
   /* Adjust hero padding for mobile */
-  section[style*="padding: var(--spacing-24)"] {
-    padding: var(--spacing-16) var(--spacing-4) var(--spacing-12) !important;
+  section {
+    padding: var(--spacing-12) var(--spacing-4) var(--spacing-8) !important;
   }
   
-  /* Adjust card min-height on mobile */
-  div[style*="minHeight: 500px"] {
-    min-height: auto !important;
+  /* Adjust card padding on mobile */
+  .qr-generator-layout > div > div {
+    padding: var(--spacing-6) !important;
   }
   
   /* Adjust QR preview size on mobile */
-  div[style*="width: 280px"] {
-    width: 240px !important;
-    height: 240px !important;
+  div[style*="width: 200px"] {
+    width: 180px !important;
+    height: 180px !important;
   }
   
   /* Adjust header padding on mobile */
   header {
     padding: var(--spacing-3) var(--spacing-4) !important;
   }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* Adjust spacing for tablet */
+  .qr-generator-layout {
+    gap: var(--spacing-6) !important;
+  }
   
-  /* Stack download buttons on very small screens */
-  @media (max-width: 480px) {
-    div[style*="display: flex; gap: var(--spacing-3); width: 100%"] {
-      flex-direction: column !important;
-    }
+  div[style*="width: 200px"] {
+    width: 180px !important;
+    height: 180px !important;
   }
 }

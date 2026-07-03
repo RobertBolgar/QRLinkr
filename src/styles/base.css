@@ -69,6 +69,12 @@ button:active:not(:disabled) {
   border-color: var(--color-accent);
 }
 
+/* Segmented control hover states */
+button[role="radio"]:hover:not(:disabled) {
+  background-color: var(--color-background-card);
+  color: var(--color-text-primary);
+}
+
 input, textarea, select {
   font-family: var(--font-body);
 }

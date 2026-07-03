@@ -10,7 +10,7 @@ function App() {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100vh',
-        background: 'linear-gradient(180deg, var(--color-background-primary) 0%, #0a0a0c 100%)',
+        backgroundColor: 'var(--color-background-primary)',
       }}
     >
       <Header />
@@ -26,7 +26,7 @@ function App() {
           style={{
             maxWidth: 'var(--max-width)',
             margin: '0 auto',
-            padding: '0 var(--spacing-4) var(--spacing-16)',
+            padding: '0 var(--spacing-4) var(--spacing-12)',
             width: '100%',
           }}
         >
