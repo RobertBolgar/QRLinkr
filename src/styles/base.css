@@ -22,22 +22,27 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 600;
   line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 600;
 }
 
 h3 {
-  font-size: 1.5rem;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-weight: 600;
 }
 
 h4 {
-  font-size: 1.25rem;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  font-weight: 500;
 }
 
 p {
@@ -49,6 +54,15 @@ button {
   cursor: pointer;
   border: none;
   background: none;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 input, textarea, select {
@@ -62,10 +76,12 @@ code, pre {
 a {
   color: var(--color-accent);
   text-decoration: none;
+  transition: opacity 150ms ease;
 }
 
 a:hover {
   text-decoration: underline;
+  opacity: 0.8;
 }
 
 :focus-visible {

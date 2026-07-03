@@ -1,29 +1,37 @@
 /* Responsive Design */
 
-@media (min-width: 768px) {
-  .generator-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-6);
-  }
-}
-
 @media (max-width: 767px) {
-  .generator-layout {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-4);
+  /* Stack the two-column layout on mobile */
+  div[style*="gridTemplateColumns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+    gap: var(--spacing-6) !important;
   }
   
-  h1 {
-    font-size: 2rem;
+  /* Adjust hero padding for mobile */
+  section[style*="padding: var(--spacing-24)"] {
+    padding: var(--spacing-16) var(--spacing-4) var(--spacing-12) !important;
   }
   
-  h2 {
-    font-size: 1.5rem;
+  /* Adjust card min-height on mobile */
+  div[style*="minHeight: 500px"] {
+    min-height: auto !important;
   }
   
-  h3 {
-    font-size: 1.25rem;
+  /* Adjust QR preview size on mobile */
+  div[style*="width: 280px"] {
+    width: 240px !important;
+    height: 240px !important;
+  }
+  
+  /* Adjust header padding on mobile */
+  header {
+    padding: var(--spacing-3) var(--spacing-4) !important;
+  }
+  
+  /* Stack download buttons on very small screens */
+  @media (max-width: 480px) {
+    div[style*="display: flex; gap: var(--spacing-3); width: 100%"] {
+      flex-direction: column !important;
+    }
   }
 }
