@@ -8,13 +8,7 @@ interface CardProps {
 export const Card: React.FC<CardProps> = ({ children, className = '' }) => {
   return (
     <div
-      className={`
-        background-color: var(--color-background-card);
-        border: 1px solid var(--color-border);
-        border-radius: var(--radius-card);
-        padding: var(--spacing-6);
-        ${className}
-      `}
+      className={className}
       style={{
         backgroundColor: 'var(--color-background-card)',
         border: '1px solid var(--color-border)',
