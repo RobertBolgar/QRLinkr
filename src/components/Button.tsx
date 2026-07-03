@@ -9,6 +9,7 @@ export const Button: React.FC<ButtonProps> = ({
   variant = 'primary',
   children,
   className = '',
+  style,
   ...props
 }) => {
   const buttonStyle = {
@@ -29,15 +30,16 @@ export const Button: React.FC<ButtonProps> = ({
       border: 'none',
     }),
     ...(variant === 'secondary' && {
-      backgroundColor: 'rgba(255, 255, 255, 0.1)',
-      border: '1px solid rgba(255, 255, 255, 0.2)',
-      color: 'white',
+      backgroundColor: 'var(--color-background-card)',
+      border: '1px solid var(--color-border)',
+      color: 'var(--color-text-primary)',
     }),
     ...(variant === 'ghost' && {
       backgroundColor: 'transparent',
       border: 'none',
       color: 'var(--color-text-primary)',
     }),
+    ...style,
   };
 
   return (
