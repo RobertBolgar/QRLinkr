@@ -1,0 +1,41 @@
+:root {
+  /* Colors */
+  --color-background-primary: #09090B;
+  --color-background-surface: #111113;
+  --color-background-card: #18181B;
+  
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #A1A1AA;
+  --color-text-muted: #71717A;
+  
+  --color-accent: #FF6B2C;
+  --color-success: #22C55E;
+  --color-error: #EF4444;
+  
+  --color-border: rgba(255, 255, 255, 0.08);
+  
+  /* Typography */
+  --font-heading: 'DM Sans', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Spacing */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+  --spacing-24: 96px;
+  
+  /* Border Radius */
+  --radius-input: 12px;
+  --radius-button: 12px;
+  --radius-card: 16px;
+  --radius-dialog: 20px;
+  
+  /* Layout */
+  --max-width: 1200px;
+}
