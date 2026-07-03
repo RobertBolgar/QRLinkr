@@ -11,6 +11,7 @@ export const QRGenerator: React.FC = () => {
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isDownloadingSVG, setIsDownloadingSVG] = useState(false);
 
   useEffect(() => {
     const generateQR = async () => {
@@ -69,29 +70,41 @@ export const QRGenerator: React.FC = () => {
   const handleDownloadSVG = async () => {
     if (!url) return;
 
-    const normalizedUrl = normalizeURL(url);
-    const result = await QRService.generateQRSVG(normalizedUrl, {
-      width: 300,
-      margin: 2,
-      errorCorrectionLevel: 'M',
-      color: {
-        dark: '#000000',
-        light: '#FFFFFF',
-      },
-    });
+    setIsDownloadingSVG(true);
+    setError(null);
 
-    if (result.success && result.dataUrl) {
-      const link = document.createElement('a');
-      link.href = result.dataUrl;
-      link.download = 'qrcode.svg';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+    try {
+      const normalizedUrl = normalizeURL(url);
+      const result = await QRService.generateQRSVG(normalizedUrl, {
+        width: 300,
+        margin: 2,
+        errorCorrectionLevel: 'M',
+        color: {
+          dark: '#000000',
+          light: '#FFFFFF',
+        },
+      });
+
+      if (result.success && result.dataUrl) {
+        const link = document.createElement('a');
+        link.href = result.dataUrl;
+        link.download = 'qrcode.svg';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } else {
+        setError(result.error || 'Failed to generate SVG');
+      }
+    } catch (err) {
+      setError('Failed to download SVG');
+    } finally {
+      setIsDownloadingSVG(false);
     }
   };
 
   return (
     <div
+      className="qr-generator-layout"
       style={{
         display: 'grid',
         gridTemplateColumns: '1fr 1fr',
@@ -147,6 +160,8 @@ export const QRGenerator: React.FC = () => {
               QR Type
             </label>
             <div
+              role="radiogroup"
+              aria-label="QR Type Selection"
               style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(3, 1fr)',
@@ -156,7 +171,10 @@ export const QRGenerator: React.FC = () => {
               {['URL', 'Text', 'Email'].map((type) => (
                 <button
                   key={type}
+                  role="radio"
+                  aria-checked={type === 'URL'}
                   disabled={type !== 'URL'}
+                  aria-disabled={type !== 'URL'}
                   style={{
                     padding: 'var(--spacing-3)',
                     borderRadius: 'var(--radius-input)',
@@ -247,11 +265,13 @@ export const QRGenerator: React.FC = () => {
             boxShadow: '0 4px 24px rgba(0, 0, 0, 0.2)',
             overflow: 'hidden',
           }}
+          role="img"
+          aria-label={qrDataUrl ? `QR code for ${url}` : 'QR code preview'}
         >
           {qrDataUrl ? (
             <img
               src={qrDataUrl}
-              alt="QR Code"
+              alt={`QR code for ${url}`}
               style={{
                 width: '100%',
                 height: '100%',
@@ -268,8 +288,9 @@ export const QRGenerator: React.FC = () => {
                 gap: 'var(--spacing-3)',
                 color: 'var(--color-text-muted)',
               }}
+              aria-live="polite"
             >
-              <QrCode size={64} style={{ opacity: 0.3 }} />
+              <QrCode size={64} style={{ opacity: 0.3 }} aria-hidden="true" />
               <span style={{ fontSize: '0.875rem', fontWeight: 500 }}>
                 {isGenerating ? 'Generating...' : 'QR Preview'}
               </span>
@@ -314,10 +335,10 @@ export const QRGenerator: React.FC = () => {
           <Button
             variant="primary"
             onClick={handleDownloadSVG}
-            disabled={!qrDataUrl}
+            disabled={!qrDataUrl || isDownloadingSVG}
             style={{ flex: 1 }}
           >
-            Download SVG
+            {isDownloadingSVG ? 'Downloading...' : 'Download SVG'}
           </Button>
         </div>
       </Card>

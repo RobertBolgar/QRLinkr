@@ -65,6 +65,10 @@ button:active:not(:disabled) {
   transform: translateY(0);
 }
 
+.qr-input:focus {
+  border-color: var(--color-accent);
+}
+
 input, textarea, select {
   font-family: var(--font-body);
 }

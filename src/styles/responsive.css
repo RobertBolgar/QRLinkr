@@ -2,7 +2,7 @@
 
 @media (max-width: 767px) {
   /* Stack the two-column layout on mobile */
-  div[style*="gridTemplateColumns: 1fr 1fr"] {
+  .qr-generator-layout {
     grid-template-columns: 1fr !important;
     gap: var(--spacing-6) !important;
   }

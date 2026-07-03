@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useId } from 'react';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
 }
 
-export const Input: React.FC<InputProps> = ({ label, className = '', ...props }) => {
+export const Input: React.FC<InputProps> = ({ label, className = '', id, ...props }) => {
+  const generatedId = useId();
+  const inputId = id || generatedId;
+
   return (
     <div className={`input-wrapper ${className}`}>
       {label && (
         <label
-          htmlFor={props.id}
+          htmlFor={inputId}
           style={{
             display: 'block',
             marginBottom: 'var(--spacing-2)',
@@ -23,6 +26,8 @@ export const Input: React.FC<InputProps> = ({ label, className = '', ...props })
       )}
       <input
         {...props}
+        id={inputId}
+        className="qr-input"
         style={{
           width: '100%',
           padding: 'var(--spacing-3) var(--spacing-4)',
@@ -31,16 +36,7 @@ export const Input: React.FC<InputProps> = ({ label, className = '', ...props })
           border: '1px solid var(--color-border)',
           color: 'var(--color-text-primary)',
           fontSize: '1rem',
-          transition: 'border-color 150ms ease',
           outline: 'none',
-        }}
-        onFocus={(e) => {
-          e.target.style.borderColor = 'var(--color-accent)';
-          props.onFocus?.(e);
-        }}
-        onBlur={(e) => {
-          e.target.style.borderColor = 'var(--color-border)';
-          props.onBlur?.(e);
         }}
       />
     </div>
