@@ -3,6 +3,7 @@ import { QrCode } from 'lucide-react';
 import { Card } from './Card';
 import { Input } from './Input';
 import { Button } from './Button';
+import { UpgradeCard } from './UpgradeCard';
 import { QRService } from '../services/qrService';
 import { validateURL, normalizeURL } from '../utils/validation';
 
@@ -113,22 +114,22 @@ export const QRGenerator: React.FC = () => {
         style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
-          gap: 'var(--spacing-6)',
+          gap: 'var(--spacing-8)',
           alignItems: 'start',
         }}
       >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-3)' }}>
           <div>
             <h2
               style={{
-                fontSize: '1.125rem',
+                fontSize: '1.25rem',
                 fontWeight: 600,
                 marginBottom: 'var(--spacing-1)',
                 fontFamily: 'var(--font-heading)',
                 color: 'var(--color-text-primary)',
               }}
             >
-              QR Generator
+              Website QR Code
             </h2>
             <p
               style={{
@@ -137,105 +138,44 @@ export const QRGenerator: React.FC = () => {
                 lineHeight: 1.4,
               }}
             >
-              Enter your website URL to generate a QR code.
+              Enter a website address to instantly generate a high-quality QR code.
             </p>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
-            <div
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 'var(--spacing-2)',
+            }}
+          >
+            <label
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 'var(--spacing-2)',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                color: 'var(--color-text-secondary)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em',
               }}
             >
-              <label
+              Website URL
+            </label>
+            <Input
+              type="url"
+              placeholder="https://example.com"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+            />
+            {error && (
+              <p
                 style={{
                   fontSize: '0.75rem',
-                  fontWeight: 600,
-                  color: 'var(--color-text-secondary)',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.05em',
+                  color: 'var(--color-error)',
                 }}
               >
-                QR Type
-              </label>
-              <div
-                role="radiogroup"
-                aria-label="QR Type Selection"
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(3, 1fr)',
-                  gap: '1px',
-                  padding: '1px',
-                  backgroundColor: 'var(--color-border)',
-                  borderRadius: 'var(--radius-input)',
-                }}
-              >
-                {['URL', 'Text', 'Email'].map((type) => (
-                  <button
-                    key={type}
-                    role="radio"
-                    aria-checked={type === 'URL'}
-                    disabled={type !== 'URL'}
-                    aria-disabled={type !== 'URL'}
-                    style={{
-                      padding: 'var(--spacing-2) var(--spacing-3)',
-                      borderRadius: 'calc(var(--radius-input) - 1px)',
-                      backgroundColor: type === 'URL' 
-                        ? 'var(--color-background-card)' 
-                        : 'var(--color-background-surface)',
-                      border: 'none',
-                      color: type === 'URL' 
-                        ? 'var(--color-text-primary)' 
-                        : 'var(--color-text-muted)',
-                      fontSize: '0.8125rem',
-                      fontWeight: 500,
-                      cursor: type === 'URL' ? 'pointer' : 'not-allowed',
-                      transition: 'all 200ms ease',
-                    }}
-                  >
-                    {type}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 'var(--spacing-2)',
-              }}
-            >
-              <label
-                style={{
-                  fontSize: '0.75rem',
-                  fontWeight: 600,
-                  color: 'var(--color-text-secondary)',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.05em',
-                }}
-              >
-                Website URL
-              </label>
-              <Input
-                type="url"
-                placeholder="https://example.com"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-              />
-              {error && (
-                <p
-                  style={{
-                    fontSize: '0.75rem',
-                    color: 'var(--color-error)',
-                  }}
-                >
-                  {error}
-                </p>
-              )}
-            </div>
+                {error}
+              </p>
+            )}
           </div>
         </div>
 
@@ -263,14 +203,14 @@ export const QRGenerator: React.FC = () => {
             <div
               style={{
                 position: 'relative',
-                width: '220px',
-                height: '220px',
+                width: '240px',
+                height: '240px',
                 borderRadius: 'var(--radius-input)',
                 backgroundColor: '#FFFFFF',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08)',
+                boxShadow: '0 12px 48px rgba(0, 0, 0, 0.15), 0 4px 16px rgba(0, 0, 0, 0.1)',
               }}
               role="img"
               aria-label={qrDataUrl ? `QR code for ${url}` : 'QR code preview'}
@@ -323,6 +263,21 @@ export const QRGenerator: React.FC = () => {
                 {isDownloadingSVG ? 'Downloading...' : 'Download SVG'}
               </Button>
             </div>
+
+            {qrDataUrl && (
+              <UpgradeCard
+                title="Want to know who scans your QR code?"
+                description="Your QR code works great. If you'd like to track scans, measure traffic, and see which marketing campaigns perform best, create a free Smart Link with TubeLinkr and generate a trackable QR code."
+                features={[
+                  'Track QR scans',
+                  'Measure clicks',
+                  'Create Smart Links',
+                  'View Traffic Proof',
+                ]}
+                buttonText="Track This QR with TubeLinkr →"
+                destinationUrl="https://rob.tubelinkr.com/invite/c1"
+              />
+            )}
           </div>
         </div>
       </div>
