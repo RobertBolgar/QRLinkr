@@ -13,21 +13,22 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const buttonStyle = {
-    padding: 'var(--spacing-3) var(--spacing-6)',
+    padding: 'var(--spacing-3) var(--spacing-5)',
     borderRadius: 'var(--radius-button)',
     fontWeight: 500,
     fontSize: '0.875rem',
-    transition: 'all 150ms ease',
+    transition: 'all 200ms ease',
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
     gap: 'var(--spacing-2)',
     cursor: props.disabled ? 'not-allowed' : 'pointer',
-    opacity: props.disabled ? 0.4 : 1,
+    opacity: props.disabled ? 0.5 : 1,
     ...(variant === 'primary' && {
       backgroundColor: 'var(--color-accent)',
       color: 'white',
       border: 'none',
+      boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
     }),
     ...(variant === 'secondary' && {
       backgroundColor: 'var(--color-background-card)',

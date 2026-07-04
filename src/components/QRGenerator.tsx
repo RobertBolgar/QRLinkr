@@ -105,7 +105,7 @@ export const QRGenerator: React.FC = () => {
   return (
     <Card
       style={{
-        padding: 'var(--spacing-8)',
+        padding: 'var(--spacing-6)',
       }}
     >
       <div
@@ -113,15 +113,15 @@ export const QRGenerator: React.FC = () => {
         style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
-          gap: 'var(--spacing-8)',
+          gap: 'var(--spacing-6)',
           alignItems: 'start',
         }}
       >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-6)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
           <div>
             <h2
               style={{
-                fontSize: '1.25rem',
+                fontSize: '1.125rem',
                 fontWeight: 600,
                 marginBottom: 'var(--spacing-1)',
                 fontFamily: 'var(--font-heading)',
@@ -132,16 +132,16 @@ export const QRGenerator: React.FC = () => {
             </h2>
             <p
               style={{
-                fontSize: '0.875rem',
+                fontSize: '0.8125rem',
                 color: 'var(--color-text-secondary)',
-                lineHeight: 1.5,
+                lineHeight: 1.4,
               }}
             >
               Enter your website URL to generate a QR code.
             </p>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-5)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
             <div
               style={{
                 display: 'flex',
@@ -166,11 +166,10 @@ export const QRGenerator: React.FC = () => {
                 style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(3, 1fr)',
-                  gap: 'var(--spacing-1)',
-                  padding: 'var(--spacing-1)',
-                  backgroundColor: 'var(--color-background-surface)',
+                  gap: '1px',
+                  padding: '1px',
+                  backgroundColor: 'var(--color-border)',
                   borderRadius: 'var(--radius-input)',
-                  border: '1px solid var(--color-border)',
                 }}
               >
                 {['URL', 'Text', 'Email'].map((type) => (
@@ -181,19 +180,19 @@ export const QRGenerator: React.FC = () => {
                     disabled={type !== 'URL'}
                     aria-disabled={type !== 'URL'}
                     style={{
-                      padding: 'var(--spacing-2)',
-                      borderRadius: 'calc(var(--radius-input) - 2px)',
+                      padding: 'var(--spacing-2) var(--spacing-3)',
+                      borderRadius: 'calc(var(--radius-input) - 1px)',
                       backgroundColor: type === 'URL' 
                         ? 'var(--color-background-card)' 
-                        : 'transparent',
+                        : 'var(--color-background-surface)',
                       border: 'none',
                       color: type === 'URL' 
                         ? 'var(--color-text-primary)' 
                         : 'var(--color-text-muted)',
-                      fontSize: '0.875rem',
+                      fontSize: '0.8125rem',
                       fontWeight: 500,
                       cursor: type === 'URL' ? 'pointer' : 'not-allowed',
-                      transition: 'all 150ms ease',
+                      transition: 'all 200ms ease',
                     }}
                   >
                     {type}
@@ -254,8 +253,8 @@ export const QRGenerator: React.FC = () => {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: 'var(--spacing-4)',
-              padding: 'var(--spacing-6)',
+              gap: 'var(--spacing-5)',
+              padding: 'var(--spacing-5)',
               backgroundColor: 'var(--color-background-surface)',
               borderRadius: 'var(--radius-card)',
               border: '1px solid var(--color-border)',
@@ -264,14 +263,14 @@ export const QRGenerator: React.FC = () => {
             <div
               style={{
                 position: 'relative',
-                width: '200px',
-                height: '200px',
+                width: '220px',
+                height: '220px',
                 borderRadius: 'var(--radius-input)',
                 backgroundColor: '#FFFFFF',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08)',
               }}
               role="img"
               aria-label={qrDataUrl ? `QR code for ${url}` : 'QR code preview'}

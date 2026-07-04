@@ -4,25 +4,25 @@
   /* Stack the two-column layout on mobile */
   .qr-generator-layout {
     grid-template-columns: 1fr !important;
-    gap: var(--spacing-6) !important;
+    gap: var(--spacing-5) !important;
   }
-  
+
   /* Adjust hero padding for mobile */
   section {
-    padding: var(--spacing-12) var(--spacing-4) var(--spacing-8) !important;
+    padding: var(--spacing-10) var(--spacing-4) var(--spacing-6) !important;
   }
-  
+
   /* Adjust card padding on mobile */
   .qr-generator-layout > div > div {
-    padding: var(--spacing-6) !important;
+    padding: var(--spacing-4) !important;
   }
-  
+
   /* Adjust QR preview size on mobile */
-  div[style*="width: 200px"] {
-    width: 180px !important;
-    height: 180px !important;
+  div[style*="width: 220px"] {
+    width: 200px !important;
+    height: 200px !important;
   }
-  
+
   /* Adjust header padding on mobile */
   header {
     padding: var(--spacing-3) var(--spacing-4) !important;
@@ -32,11 +32,11 @@
 @media (min-width: 768px) and (max-width: 1024px) {
   /* Adjust spacing for tablet */
   .qr-generator-layout {
-    gap: var(--spacing-6) !important;
+    gap: var(--spacing-5) !important;
   }
-  
-  div[style*="width: 200px"] {
-    width: 180px !important;
-    height: 180px !important;
+
+  div[style*="width: 220px"] {
+    width: 200px !important;
+    height: 200px !important;
   }
 }

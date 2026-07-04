@@ -5,16 +5,16 @@ export const Hero: React.FC = () => {
     <section
       style={{
         textAlign: 'center',
-        padding: 'var(--spacing-20) var(--spacing-4) var(--spacing-12)',
-        maxWidth: '800px',
+        padding: 'var(--spacing-16) var(--spacing-4) var(--spacing-8)',
+        maxWidth: '700px',
         margin: '0 auto',
       }}
     >
       <h1
         style={{
-          fontSize: 'clamp(2rem, 4vw, 3rem)',
+          fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)',
           fontWeight: 600,
-          marginBottom: 'var(--spacing-4)',
+          marginBottom: 'var(--spacing-3)',
           fontFamily: 'var(--font-heading)',
           lineHeight: 1.2,
           letterSpacing: '-0.01em',
@@ -25,10 +25,10 @@ export const Hero: React.FC = () => {
       </h1>
       <p
         style={{
-          fontSize: 'clamp(0.875rem, 1.5vw, 1rem)',
+          fontSize: 'clamp(0.8125rem, 1.25vw, 0.9375rem)',
           color: 'var(--color-text-secondary)',
-          lineHeight: 1.6,
-          maxWidth: '500px',
+          lineHeight: 1.5,
+          maxWidth: '450px',
           margin: '0 auto',
         }}
       >

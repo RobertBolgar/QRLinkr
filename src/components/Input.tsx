@@ -35,8 +35,9 @@ export const Input: React.FC<InputProps> = ({ label, className = '', id, ...prop
           backgroundColor: 'var(--color-background-surface)',
           border: '1px solid var(--color-border)',
           color: 'var(--color-text-primary)',
-          fontSize: '1rem',
+          fontSize: '0.9375rem',
           outline: 'none',
+          transition: 'border-color 150ms ease, box-shadow 150ms ease',
         }}
       />
     </div>
