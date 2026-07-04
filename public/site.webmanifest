@@ -1,0 +1,14 @@
+{
+  "name": "QRLinkr",
+  "short_name": "QRLinkr",
+  "theme_color": "#FF6B2C",
+  "background_color": "#0B0B0F",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/Favicon.png",
+      "sizes": "any",
+      "type": "image/png"
+    }
+  ]
+}
