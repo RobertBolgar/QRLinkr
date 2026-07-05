@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { MessageSquare, QrCode } from 'lucide-react';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
@@ -11,12 +12,13 @@ function decodeMessage(encoded: string): string {
 }
 
 export const MessagePage: React.FC = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [message, setMessage] = useState<string>('');
   const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const textParam = params.get('text');
+    const textParam = searchParams.get('text');
 
     if (textParam) {
       try {
@@ -31,7 +33,7 @@ export const MessagePage: React.FC = () => {
       setError(true);
       setMessage('');
     }
-  }, []);
+  }, [searchParams]);
 
   return (
     <div
@@ -157,7 +159,7 @@ export const MessagePage: React.FC = () => {
             <div style={{ width: '100%' }}>
               <Button
                 variant="secondary"
-                onClick={() => (window.location.href = '/')}
+                onClick={() => navigate('/')}
                 style={{ width: '100%' }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--spacing-2)' }}>
