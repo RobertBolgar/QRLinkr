@@ -23,7 +23,7 @@ Launch the best free QR code generator on the internet.
 Includes:
 
 - URL QR
-- Text QR
+- Custom Message QR
 - Email QR
 - Phone QR
 - SMS QR

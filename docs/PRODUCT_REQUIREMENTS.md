@@ -32,7 +32,7 @@ So I can download and use it without creating an account.
 ### Supported QR Types
 
 - Website URL
-- Plain Text
+- Custom Message
 - Email
 - Phone
 - SMS

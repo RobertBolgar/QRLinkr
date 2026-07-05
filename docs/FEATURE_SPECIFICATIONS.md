@@ -45,19 +45,47 @@ As a user, I want to paste a URL and instantly generate a QR code.
 
 ---
 
-# Feature 002 — Plain Text QR
+# Feature 002 — Custom Message QR
 
-Generate QR codes from plain text.
+## Purpose
 
-Requirements:
+Allow users to generate a QR code that displays a custom text message when scanned.
 
+## User Story
+
+As a user, I want to enter a custom message and instantly generate a QR code that displays that message when scanned.
+
+## Requirements
+
+- 100% client-side
+- No account required
+- No backend
+- No database
+- Unlimited use
+- Live preview
+- PNG download
+- SVG download
+- Uses the existing QR generation service
 - Multi-line support
 - Unicode support
-- Live preview
 
-Acceptance:
+## User Flow
 
-- Text scans correctly
+1. Select generation mode
+2. Choose between:
+   - Website URL
+   - Custom Message
+3. Enter content
+4. Live QR preview updates
+5. Download PNG or SVG
+
+## Acceptance Criteria
+
+- QR updates instantly as user types
+- QR scans correctly and displays the custom message
+- Downloads work for both PNG and SVG formats
+- No account creation required
+- Works entirely client-side
 
 ---
 

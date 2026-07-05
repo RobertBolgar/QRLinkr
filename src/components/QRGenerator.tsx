@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { QrCode } from 'lucide-react';
+import { QrCode, Globe, MessageSquare, Check, Download, Zap } from 'lucide-react';
 import { Card } from './Card';
 import { Input } from './Input';
 import { Button } from './Button';
@@ -7,8 +7,14 @@ import { UpgradeCard } from './UpgradeCard';
 import { QRService } from '../services/qrService';
 import { validateURL, normalizeURL } from '../utils/validation';
 
+type GenerationMode = 'website' | 'message';
+
+const MAX_MESSAGE_LENGTH = 500;
+
 export const QRGenerator: React.FC = () => {
+  const [mode, setMode] = useState<GenerationMode>('website');
   const [url, setUrl] = useState('');
+  const [message, setMessage] = useState('');
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -16,46 +22,83 @@ export const QRGenerator: React.FC = () => {
 
   useEffect(() => {
     const generateQR = async () => {
-      if (!url.trim()) {
-        setQrDataUrl(null);
+      if (mode === 'website') {
+        if (!url.trim()) {
+          setQrDataUrl(null);
+          setError(null);
+          return;
+        }
+
+        const validation = validateURL(url);
+        if (!validation.isValid) {
+          setError(validation.error || null);
+          setQrDataUrl(null);
+          return;
+        }
+
         setError(null);
-        return;
-      }
+        setIsGenerating(true);
 
-      const validation = validateURL(url);
-      if (!validation.isValid) {
-        setError(validation.error || null);
-        setQrDataUrl(null);
-        return;
-      }
+        const normalizedUrl = normalizeURL(url);
+        const result = await QRService.generateQR(normalizedUrl, {
+          width: 300,
+          margin: 2,
+          errorCorrectionLevel: 'M',
+          color: {
+            dark: '#000000',
+            light: '#FFFFFF',
+          },
+        });
 
-      setError(null);
-      setIsGenerating(true);
+        setIsGenerating(false);
 
-      const normalizedUrl = normalizeURL(url);
-      const result = await QRService.generateQR(normalizedUrl, {
-        width: 300,
-        margin: 2,
-        errorCorrectionLevel: 'M',
-        color: {
-          dark: '#000000',
-          light: '#FFFFFF',
-        },
-      });
-
-      setIsGenerating(false);
-
-      if (result.success && result.dataUrl) {
-        setQrDataUrl(result.dataUrl);
+        if (result.success && result.dataUrl) {
+          setQrDataUrl(result.dataUrl);
+        } else {
+          setError(result.error || 'Failed to generate QR code');
+          setQrDataUrl(null);
+        }
       } else {
-        setError(result.error || 'Failed to generate QR code');
-        setQrDataUrl(null);
+        // Message mode
+        if (!message.trim()) {
+          setQrDataUrl(null);
+          setError(null);
+          return;
+        }
+
+        if (message.length > MAX_MESSAGE_LENGTH) {
+          setError(`Message must be ${MAX_MESSAGE_LENGTH} characters or less`);
+          setQrDataUrl(null);
+          return;
+        }
+
+        setError(null);
+        setIsGenerating(true);
+
+        const result = await QRService.generateQR(message, {
+          width: 300,
+          margin: 2,
+          errorCorrectionLevel: 'M',
+          color: {
+            dark: '#000000',
+            light: '#FFFFFF',
+          },
+        });
+
+        setIsGenerating(false);
+
+        if (result.success && result.dataUrl) {
+          setQrDataUrl(result.dataUrl);
+        } else {
+          setError(result.error || 'Failed to generate QR code');
+          setQrDataUrl(null);
+        }
       }
     };
 
     const debounceTimer = setTimeout(generateQR, 300);
     return () => clearTimeout(debounceTimer);
-  }, [url]);
+  }, [mode, url, message]);
 
   const handleDownloadPNG = () => {
     if (!qrDataUrl) return;
@@ -69,14 +112,15 @@ export const QRGenerator: React.FC = () => {
   };
 
   const handleDownloadSVG = async () => {
-    if (!url) return;
+    const content = mode === 'website' ? url : message;
+    if (!content) return;
 
     setIsDownloadingSVG(true);
     setError(null);
 
     try {
-      const normalizedUrl = normalizeURL(url);
-      const result = await QRService.generateQRSVG(normalizedUrl, {
+      const contentToEncode = mode === 'website' ? normalizeURL(url) : message;
+      const result = await QRService.generateQRSVG(contentToEncode, {
         width: 300,
         margin: 2,
         errorCorrectionLevel: 'M',
@@ -106,7 +150,7 @@ export const QRGenerator: React.FC = () => {
   return (
     <Card
       style={{
-        padding: 'var(--spacing-6)',
+        padding: 'var(--spacing-8)',
       }}
     >
       <div
@@ -118,27 +162,88 @@ export const QRGenerator: React.FC = () => {
           alignItems: 'start',
         }}
       >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-3)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
+          {/* Mode Selector */}
+          <div
+            style={{
+              display: 'flex',
+              gap: 'var(--spacing-1)',
+              padding: 'var(--spacing-1)',
+              backgroundColor: 'var(--color-background-surface)',
+              borderRadius: 'var(--radius-input)',
+              border: '1px solid var(--color-border)',
+            }}
+          >
+            <button
+              onClick={() => setMode('website')}
+              style={{
+                flex: 1,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 'var(--spacing-2)',
+                padding: 'var(--spacing-2) var(--spacing-4)',
+                borderRadius: 'calc(var(--radius-input) - 3px)',
+                border: 'none',
+                backgroundColor: mode === 'website' ? 'var(--color-primary)' : 'transparent',
+                color: mode === 'website' ? '#FFFFFF' : 'var(--color-text-secondary)',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 150ms ease',
+                boxShadow: mode === 'website' ? '0 1px 3px rgba(0, 0, 0, 0.1)' : 'none',
+              }}
+            >
+              <Globe size={16} />
+              Website
+            </button>
+            <button
+              onClick={() => setMode('message')}
+              style={{
+                flex: 1,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 'var(--spacing-2)',
+                padding: 'var(--spacing-2) var(--spacing-4)',
+                borderRadius: 'calc(var(--radius-input) - 3px)',
+                border: 'none',
+                backgroundColor: mode === 'message' ? 'var(--color-primary)' : 'transparent',
+                color: mode === 'message' ? '#FFFFFF' : 'var(--color-text-secondary)',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 150ms ease',
+                boxShadow: mode === 'message' ? '0 1px 3px rgba(0, 0, 0, 0.1)' : 'none',
+              }}
+            >
+              <MessageSquare size={16} />
+              Message
+            </button>
+          </div>
+
           <div>
             <h2
               style={{
-                fontSize: '1.25rem',
+                fontSize: '1.5rem',
                 fontWeight: 600,
-                marginBottom: 'var(--spacing-1)',
+                marginBottom: 'var(--spacing-2)',
                 fontFamily: 'var(--font-heading)',
                 color: 'var(--color-text-primary)',
               }}
             >
-              Website QR Code
+              {mode === 'website' ? 'Website QR Code' : 'Message QR Code'}
             </h2>
             <p
               style={{
-                fontSize: '0.8125rem',
+                fontSize: '0.875rem',
                 color: 'var(--color-text-secondary)',
-                lineHeight: 1.4,
+                lineHeight: 1.5,
               }}
             >
-              Enter a website address to instantly generate a high-quality QR code.
+              {mode === 'website'
+                ? 'Enter a website address to instantly generate a high-quality QR code.'
+                : 'Type anything you want someone to see after they scan your QR code.'}
             </p>
           </div>
 
@@ -158,14 +263,64 @@ export const QRGenerator: React.FC = () => {
                 letterSpacing: '0.05em',
               }}
             >
-              Website URL
+              {mode === 'website' ? 'Website URL' : 'Message'}
             </label>
-            <Input
-              type="url"
-              placeholder="https://example.com"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-            />
+            {mode === 'website' ? (
+              <Input
+                type="url"
+                placeholder="https://example.com"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+              />
+            ) : (
+              <>
+                <textarea
+                  placeholder="Type your message here..."
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  style={{
+                    width: '100%',
+                    minHeight: '120px',
+                    padding: 'var(--spacing-3) var(--spacing-4)',
+                    borderRadius: 'var(--radius-input)',
+                    backgroundColor: 'var(--color-background-surface)',
+                    border: '1px solid var(--color-border)',
+                    color: 'var(--color-text-primary)',
+                    fontSize: '0.9375rem',
+                    fontFamily: 'inherit',
+                    outline: 'none',
+                    transition: 'border-color 150ms ease, box-shadow 150ms ease',
+                    resize: 'vertical',
+                  }}
+                />
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: '0.75rem',
+                      color: 'var(--color-text-secondary)',
+                    }}
+                  >
+                    {message.length} / {MAX_MESSAGE_LENGTH} characters
+                  </span>
+                  {message.length > MAX_MESSAGE_LENGTH * 0.9 && (
+                    <span
+                      style={{
+                        fontSize: '0.75rem',
+                        color: 'var(--color-error)',
+                      }}
+                    >
+                      Approaching limit
+                    </span>
+                  )}
+                </div>
+              </>
+            )}
             {error && (
               <p
                 style={{
@@ -177,6 +332,28 @@ export const QRGenerator: React.FC = () => {
               </p>
             )}
           </div>
+
+          {/* Feature Highlights - Desktop Only */}
+          <div className="feature-highlights">
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-2)' }}>
+              <Check size={16} style={{ color: 'var(--color-primary)' }} />
+              <span style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)' }}>
+                Free forever, no account required
+              </span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-2)' }}>
+              <Download size={16} style={{ color: 'var(--color-primary)' }} />
+              <span style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)' }}>
+                PNG + SVG downloads, no watermark
+              </span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-2)' }}>
+              <Zap size={16} style={{ color: 'var(--color-primary)' }} />
+              <span style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)' }}>
+                Instant generation, 100% client-side
+              </span>
+            </div>
+          </div>
         </div>
 
         <div
@@ -184,7 +361,7 @@ export const QRGenerator: React.FC = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: 'var(--spacing-4)',
+            gap: 'var(--spacing-5)',
           }}
         >
           <div
@@ -194,7 +371,7 @@ export const QRGenerator: React.FC = () => {
               flexDirection: 'column',
               alignItems: 'center',
               gap: 'var(--spacing-5)',
-              padding: 'var(--spacing-5)',
+              padding: 'var(--spacing-6)',
               backgroundColor: 'var(--color-background-surface)',
               borderRadius: 'var(--radius-card)',
               border: '1px solid var(--color-border)',
@@ -213,12 +390,12 @@ export const QRGenerator: React.FC = () => {
                 boxShadow: '0 12px 48px rgba(0, 0, 0, 0.15), 0 4px 16px rgba(0, 0, 0, 0.1)',
               }}
               role="img"
-              aria-label={qrDataUrl ? `QR code for ${url}` : 'QR code preview'}
+              aria-label={qrDataUrl ? `QR code for ${mode === 'website' ? url : message}` : 'QR code preview'}
             >
               {qrDataUrl ? (
                 <img
                   src={qrDataUrl}
-                  alt={`QR code for ${url}`}
+                  alt={`QR code for ${mode === 'website' ? url : message}`}
                   style={{
                     width: '100%',
                     height: '100%',

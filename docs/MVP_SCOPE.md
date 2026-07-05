@@ -28,7 +28,7 @@ A user should be able to:
 ### QR Types
 
 - Website URL
-- Plain Text
+- Custom Message
 - Email
 - Phone
 - SMS
