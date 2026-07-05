@@ -48,7 +48,7 @@ export const MessagePage: React.FC = () => {
         flexDirection: 'column',
         minHeight: '100vh',
         backgroundColor: 'var(--color-background-primary)',
-        padding: 'var(--spacing-4) var(--spacing-4) var(--spacing-8)',
+        padding: 'var(--spacing-2) var(--spacing-4) var(--spacing-8)',
       }}
     >
       <div
@@ -66,20 +66,40 @@ export const MessagePage: React.FC = () => {
           transition: 'opacity 400ms ease-out, transform 400ms ease-out',
         }}
       >
-        {/* Icon - smaller and subtler */}
+        {/* Icon with subtle glow */}
         <div
           style={{
-            width: '48px',
-            height: '48px',
-            borderRadius: '50%',
-            backgroundColor: 'var(--color-primary)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginBottom: 'var(--spacing-4)',
+            position: 'relative',
+            marginBottom: 'var(--spacing-2)',
           }}
         >
-          <MessageSquare size={24} style={{ color: '#FFFFFF' }} />
+          <div
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '72px',
+              height: '72px',
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, rgba(170, 59, 255, 0.15) 0%, rgba(170, 59, 255, 0) 70%)',
+              filter: 'blur(8px)',
+            }}
+          />
+          <div
+            style={{
+              position: 'relative',
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              backgroundColor: 'var(--color-primary)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <MessageSquare size={20} style={{ color: '#FFFFFF' }} />
+          </div>
         </div>
 
         {/* Content */}
@@ -113,11 +133,12 @@ export const MessagePage: React.FC = () => {
             {/* Subtle label */}
             <p
               style={{
-                fontSize: '0.8125rem',
+                fontSize: '0.75rem',
                 color: 'var(--color-text-secondary)',
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
-                marginBottom: 'var(--spacing-3)',
+                marginBottom: 'var(--spacing-2)',
+                opacity: 0.7,
               }}
             >
               Message for You
@@ -127,12 +148,12 @@ export const MessagePage: React.FC = () => {
             <div
               style={{
                 width: '100%',
-                padding: isShortMessage ? 'var(--spacing-8) var(--spacing-6)' : 'var(--spacing-6)',
+                padding: isShortMessage ? 'var(--spacing-6) var(--spacing-5)' : 'var(--spacing-5)',
                 backgroundColor: 'var(--color-background-surface)',
                 borderRadius: 'var(--radius-card)',
                 border: '1px solid var(--color-border)',
-                marginBottom: 'var(--spacing-6)',
-                minHeight: isShortMessage ? '200px' : 'auto',
+                marginBottom: 'var(--spacing-5)',
+                minHeight: isShortMessage ? '180px' : 'auto',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -140,10 +161,10 @@ export const MessagePage: React.FC = () => {
             >
               <p
                 style={{
-                  fontSize: isShortMessage ? '1.75rem' : isLongMessage ? '1.125rem' : '1.375rem',
+                  fontSize: isShortMessage ? '2rem' : isLongMessage ? '1.125rem' : '1.375rem',
                   fontWeight: isShortMessage ? 500 : 400,
                   color: 'var(--color-text-primary)',
-                  lineHeight: isShortMessage ? 1.4 : 1.6,
+                  lineHeight: isShortMessage ? 1.3 : 1.6,
                   whiteSpace: 'pre-wrap',
                   wordBreak: 'break-word',
                   textAlign: 'center',
@@ -156,7 +177,7 @@ export const MessagePage: React.FC = () => {
         )}
 
         {/* CTA */}
-        <div style={{ width: '100%', marginBottom: 'var(--spacing-4)' }}>
+        <div style={{ width: '100%', marginBottom: 'var(--spacing-3)' }}>
           <Button
             variant="secondary"
             onClick={() => navigate('/')}
