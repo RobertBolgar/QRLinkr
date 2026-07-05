@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { QrCode, Globe, MessageSquare, Check, Download, Zap } from 'lucide-react';
+import { QrCode, Globe, MessageSquare, Check, Download, Zap, Share2 } from 'lucide-react';
 import { Card } from './Card';
 import { Input } from './Input';
 import { Button } from './Button';
@@ -154,6 +154,46 @@ export const QRGenerator: React.FC = () => {
       setError('Failed to download SVG');
     } finally {
       setIsDownloadingSVG(false);
+    }
+  };
+
+  const handleShare = async () => {
+    if (!qrDataUrl) return;
+
+    try {
+      // Convert data URL to Blob
+      const response = await fetch(qrDataUrl);
+      const blob = await response.blob();
+      const file = new File([blob], 'qrcode.png', { type: 'image/png' });
+
+      // Check if Web Share API with file sharing is supported
+      if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: 'QR Code',
+          text: mode === 'website' ? `QR code for ${url}` : `QR code message: ${message}`,
+        });
+      } else {
+        // Fallback: open image in new tab for long-press save
+        const newWindow = window.open();
+        if (newWindow) {
+          newWindow.document.write(`
+            <html>
+              <head><title>QR Code</title></head>
+              <body style="margin:0;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#f5f5f5;">
+                <img src="${qrDataUrl}" alt="QR Code" style="max-width:100%;height:auto;padding:20px;">
+                <p style="position:fixed;bottom:20px;width:100%;text-align:center;color:#666;font-size:14px;">
+                  Long-press the image to save to Photos
+                </p>
+              </body>
+            </html>
+          `);
+          newWindow.document.close();
+        }
+      }
+    } catch (err) {
+      // User cancelled share or error occurred
+      console.error('Share failed:', err);
     }
   };
 
@@ -459,6 +499,22 @@ export const QRGenerator: React.FC = () => {
               >
                 {isDownloadingSVG ? 'Downloading...' : 'Download SVG'}
               </Button>
+              {qrDataUrl && (
+                <Button
+                  variant="secondary"
+                  onClick={handleShare}
+                  style={{ 
+                    width: '100%',
+                    display: 'none',
+                  }}
+                  className="share-button"
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--spacing-2)' }}>
+                    <Share2 size={16} />
+                    Share / Save to Photos
+                  </div>
+                </Button>
+              )}
             </div>
 
             {qrDataUrl && (
