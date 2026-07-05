@@ -28,7 +28,7 @@ A user should be able to:
 ### QR Types
 
 - Website URL
-- Custom Message
+- Custom Message (hosted page with URL-encoded content, 160 character limit)
 - Email
 - Phone
 - SMS

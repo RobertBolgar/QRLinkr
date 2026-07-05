@@ -32,7 +32,7 @@ So I can download and use it without creating an account.
 ### Supported QR Types
 
 - Website URL
-- Custom Message
+- Custom Message (hosted page with URL-encoded content)
 - Email
 - Phone
 - SMS
@@ -129,6 +129,7 @@ These features belong in future versions or TubeLinkr.
 - Vite
 - TypeScript
 - Plain CSS
+- React Router
 - Vercel
 
 No backend.
@@ -136,6 +137,8 @@ No backend.
 No authentication.
 
 No database.
+
+Message QR codes use a hosted QRLinkr page with URL-encoded content.
 
 ## Definition of Done
 

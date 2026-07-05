@@ -92,6 +92,20 @@ Active
 
 ---
 
+### Decision
+Message QR codes use a hosted QRLinkr message page with URL-encoded content instead of raw text QR codes.
+
+**Reason**
+This creates a consistent branded experience across devices without requiring a backend or database. The message is stored entirely within the QR code URL itself, ensuring the feature remains 100% client-side while providing a polished presentation layer.
+
+**Status**
+Active
+
+**Date**
+2026-07-05
+
+---
+
 ## Technology
 
 ### Decision

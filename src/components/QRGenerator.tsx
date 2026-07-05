@@ -9,7 +9,7 @@ import { validateURL, normalizeURL } from '../utils/validation';
 
 type GenerationMode = 'website' | 'message';
 
-const MAX_MESSAGE_LENGTH = 500;
+const MAX_MESSAGE_LENGTH = 160;
 
 export const QRGenerator: React.FC = () => {
   const [mode, setMode] = useState<GenerationMode>('website');
@@ -75,7 +75,11 @@ export const QRGenerator: React.FC = () => {
         setError(null);
         setIsGenerating(true);
 
-        const result = await QRService.generateQR(message, {
+        // Encode message as hosted URL
+        const encodedMessage = encodeURIComponent(message);
+        const messageUrl = `${window.location.origin}/message?text=${encodedMessage}`;
+        
+        const result = await QRService.generateQR(messageUrl, {
           width: 300,
           margin: 2,
           errorCorrectionLevel: 'M',
@@ -119,7 +123,13 @@ export const QRGenerator: React.FC = () => {
     setError(null);
 
     try {
-      const contentToEncode = mode === 'website' ? normalizeURL(url) : message;
+      let contentToEncode: string;
+      if (mode === 'website') {
+        contentToEncode = normalizeURL(url);
+      } else {
+        const encodedMessage = encodeURIComponent(message);
+        contentToEncode = `${window.location.origin}/message?text=${encodedMessage}`;
+      }
       const result = await QRService.generateQRSVG(contentToEncode, {
         width: 300,
         margin: 2,
@@ -243,7 +253,7 @@ export const QRGenerator: React.FC = () => {
             >
               {mode === 'website'
                 ? 'Enter a website address to instantly generate a high-quality QR code.'
-                : 'Type anything you want someone to see after they scan your QR code.'}
+                : 'Create a QR code that opens a custom message when scanned.'}
             </p>
           </div>
 
@@ -263,7 +273,7 @@ export const QRGenerator: React.FC = () => {
                 letterSpacing: '0.05em',
               }}
             >
-              {mode === 'website' ? 'Website URL' : 'Message'}
+              {mode === 'website' ? 'Website URL' : 'Your Message'}
             </label>
             {mode === 'website' ? (
               <Input
@@ -278,6 +288,7 @@ export const QRGenerator: React.FC = () => {
                   placeholder="Type your message here..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
+                  maxLength={MAX_MESSAGE_LENGTH}
                   style={{
                     width: '100%',
                     minHeight: '120px',
@@ -293,6 +304,15 @@ export const QRGenerator: React.FC = () => {
                     resize: 'vertical',
                   }}
                 />
+                <p
+                  style={{
+                    fontSize: '0.75rem',
+                    color: 'var(--color-text-secondary)',
+                    marginTop: 'var(--spacing-1)',
+                  }}
+                >
+                  Keep it short. Your message is stored inside the QR code link.
+                </p>
                 <div
                   style={{
                     display: 'flex',
@@ -315,7 +335,7 @@ export const QRGenerator: React.FC = () => {
                         color: 'var(--color-error)',
                       }}
                     >
-                      Approaching limit
+                      Keep it short
                     </span>
                   )}
                 </div>

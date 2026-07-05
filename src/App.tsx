@@ -1,9 +1,11 @@
+import { Routes, Route } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { QRGenerator } from './components/QRGenerator';
 import { Footer } from './components/Footer';
+import { MessagePage } from './pages/MessagePage';
 
-function App() {
+function HomePage() {
   return (
     <div
       style={{
@@ -35,6 +37,15 @@ function App() {
       </main>
       <Footer />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/message" element={<MessagePage />} />
+    </Routes>
   );
 }
 

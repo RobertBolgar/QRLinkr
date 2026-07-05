@@ -30,6 +30,7 @@ Avoid premature complexity.
 - Vite
 - TypeScript
 - Plain CSS
+- React Router
 - Vercel
 - GitHub
 

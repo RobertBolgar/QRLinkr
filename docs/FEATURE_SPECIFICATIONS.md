@@ -49,11 +49,11 @@ As a user, I want to paste a URL and instantly generate a QR code.
 
 ## Purpose
 
-Allow users to generate a QR code that displays a custom text message when scanned.
+Allow users to generate a QR code that opens a hosted QRLinkr message page displaying a custom text message when scanned.
 
 ## User Story
 
-As a user, I want to enter a custom message and instantly generate a QR code that displays that message when scanned.
+As a user, I want to enter a custom message and instantly generate a QR code that opens a branded message page when scanned.
 
 ## Requirements
 
@@ -66,8 +66,21 @@ As a user, I want to enter a custom message and instantly generate a QR code tha
 - PNG download
 - SVG download
 - Uses the existing QR generation service
-- Multi-line support
+- Message limit: 160 characters
+- URL-safe encoding
+- Hosted /message page for display
+- Plain text rendering (no HTML/script injection)
 - Unicode support
+- Emoji support
+
+## Architecture
+
+The QR code points to a hosted QRLinkr URL:
+- Format: `https://qrlinkr.app/message?text=<encoded-message>`
+- Message is URL-encoded in the query parameter
+- The /message page decodes and displays the message
+- No backend or database required
+- Message content comes entirely from the QR code URL
 
 ## User Flow
 
@@ -75,17 +88,31 @@ As a user, I want to enter a custom message and instantly generate a QR code tha
 2. Choose between:
    - Website URL
    - Custom Message
-3. Enter content
-4. Live QR preview updates
+3. Enter message (max 160 characters)
+4. Live QR preview updates with hosted URL
 5. Download PNG or SVG
+6. When scanned, opens /message page with decoded message
+
+## /message Page Requirements
+
+- Read encoded message from URL query parameter
+- Safely decode using URL-safe decoding
+- Display message as plain text only (prevent HTML/script injection)
+- Show polished QRLinkr-branded view
+- Include "Create Your Own QR Message" CTA linking to homepage
+- Show friendly empty state when no message parameter present
+- Responsive design
 
 ## Acceptance Criteria
 
 - QR updates instantly as user types
-- QR scans correctly and displays the custom message
+- QR scans correctly and opens the /message page
+- /message page decodes and displays the message correctly
 - Downloads work for both PNG and SVG formats
 - No account creation required
 - Works entirely client-side
+- Emojis and special characters display correctly
+- Empty state shows friendly message when no text parameter
 
 ---
 
