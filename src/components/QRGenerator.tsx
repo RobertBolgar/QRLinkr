@@ -503,10 +503,7 @@ export const QRGenerator: React.FC = () => {
                 <Button
                   variant="secondary"
                   onClick={handleShare}
-                  style={{ 
-                    width: '100%',
-                    display: 'none',
-                  }}
+                  style={{ width: '100%' }}
                   className="share-button"
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--spacing-2)' }}>
