@@ -103,6 +103,21 @@ The QR code points to a hosted QRLinkr URL:
 - Show friendly empty state when no message parameter present
 - Responsive design
 
+## Security Requirements
+
+- **XSS Prevention**: Message content must NEVER be rendered with innerHTML or dangerouslySetInnerHTML
+- **Plain Text Only**: All message rendering must use React JSX/text nodes only
+- **URL Decoding**: Use decodeURIComponent() for safe URL parameter decoding
+- **Input Validation**: Handle decode errors gracefully with friendly error state
+- **No Script Execution**: HTML tags, scripts, and event handlers must display as literal text
+
+## Architecture Notes
+
+- **Stateless**: Message QR is completely stateless with no backend/database
+- **URL-Encoded Content**: Message content is stored entirely within the QR code URL
+- **Client-Side Only**: Feature works 100% client-side with no server dependencies
+- **Future-Extensible**: Current schema supports future additions (type, theme) without breaking changes
+
 ## Acceptance Criteria
 
 - QR updates instantly as user types

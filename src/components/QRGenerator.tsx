@@ -171,7 +171,7 @@ export const QRGenerator: React.FC = () => {
         await navigator.share({
           files: [file],
           title: 'QR Code',
-          text: mode === 'website' ? `QR code for ${url}` : `QR code message: ${message}`,
+          text: mode === 'website' ? `QR code for ${url}` : 'Scan this QR code to reveal a message.',
         });
       } else {
         // Fallback: open image in new tab for long-press save
