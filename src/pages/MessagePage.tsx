@@ -69,7 +69,7 @@ export const MessagePage: React.FC = () => {
         <div
           style={{
             position: 'relative',
-            marginBottom: 'var(--spacing-2)',
+            marginBottom: 'var(--spacing-1)',
           }}
         >
           <div
@@ -136,7 +136,7 @@ export const MessagePage: React.FC = () => {
                 color: 'var(--color-text-secondary)',
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
-                marginBottom: 'var(--spacing-2)',
+                marginBottom: 'var(--spacing-1)',
                 opacity: 0.7,
               }}
             >
@@ -151,7 +151,7 @@ export const MessagePage: React.FC = () => {
                 backgroundColor: 'var(--color-background-surface)',
                 borderRadius: 'var(--radius-card)',
                 border: '1px solid var(--color-border)',
-                marginBottom: 'var(--spacing-3)',
+                marginBottom: 'var(--spacing-2)',
                 minHeight: isShortMessage ? '180px' : 'auto',
                 display: 'flex',
                 alignItems: 'center',
@@ -185,24 +185,24 @@ export const MessagePage: React.FC = () => {
         >
           <h2
             style={{
-              fontSize: '0.9375rem',
-              fontWeight: 500,
+              fontSize: '1rem',
+              fontWeight: 600,
               marginBottom: 'var(--spacing-1)',
               fontFamily: 'var(--font-heading)',
-              color: 'var(--color-text-secondary)',
+              color: 'var(--color-text-primary)',
             }}
           >
-            Create Your Own Message
+            ✨ Surprise Someone Else
           </h2>
           <p
             style={{
-              fontSize: '0.8125rem',
-              color: 'var(--color-text-tertiary)',
-              lineHeight: 1.4,
+              fontSize: '0.875rem',
+              color: 'var(--color-text-secondary)',
+              lineHeight: 1.5,
               marginBottom: 'var(--spacing-3)',
             }}
           >
-            Free QR messages in seconds
+            Create your own free QR message in seconds.
           </p>
           <button
             onClick={() => navigate('/')}
@@ -210,10 +210,10 @@ export const MessagePage: React.FC = () => {
               width: '100%',
               padding: 'var(--spacing-3) var(--spacing-5)',
               borderRadius: 'var(--radius-button)',
-              fontWeight: 500,
+              fontWeight: 600,
               fontSize: '0.875rem',
-              backgroundColor: '#1a1a1a',
-              border: '1px solid #FF6B2C',
+              backgroundColor: '#FF6B2C',
+              border: 'none',
               color: '#FFFFFF',
               cursor: 'pointer',
               transition: 'all 200ms ease',
@@ -221,12 +221,15 @@ export const MessagePage: React.FC = () => {
               alignItems: 'center',
               justifyContent: 'center',
               gap: 'var(--spacing-2)',
+              boxShadow: '0 0 24px rgba(255, 107, 44, 0.28)',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = '0 0 12px rgba(255, 107, 44, 0.3)';
+              e.currentTarget.style.transform = 'translateY(-1px)';
+              e.currentTarget.style.boxShadow = '0 0 28px rgba(255, 107, 44, 0.35)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = 'none';
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 0 24px rgba(255, 107, 44, 0.28)';
             }}
           >
             Create Yours →
