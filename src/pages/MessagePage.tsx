@@ -185,21 +185,21 @@ export const MessagePage: React.FC = () => {
         >
           <h2
             style={{
-              fontSize: '1rem',
+              fontSize: '1.15rem',
               fontWeight: 600,
               marginBottom: 'var(--spacing-1)',
               fontFamily: 'var(--font-heading)',
               color: 'var(--color-text-primary)',
             }}
           >
-            ✨ Surprise Someone Else
+            Surprise Someone Else
           </h2>
           <p
             style={{
               fontSize: '0.875rem',
               color: 'var(--color-text-secondary)',
               lineHeight: 1.5,
-              marginBottom: 'var(--spacing-3)',
+              marginBottom: 'var(--spacing-4)',
             }}
           >
             Create your own free QR message in seconds.
@@ -208,7 +208,7 @@ export const MessagePage: React.FC = () => {
             onClick={() => navigate('/')}
             style={{
               width: '100%',
-              padding: 'var(--spacing-3) var(--spacing-5)',
+              padding: '10px var(--spacing-5)',
               borderRadius: 'var(--radius-button)',
               fontWeight: 600,
               fontSize: '0.875rem',
@@ -221,18 +221,18 @@ export const MessagePage: React.FC = () => {
               alignItems: 'center',
               justifyContent: 'center',
               gap: 'var(--spacing-2)',
-              boxShadow: '0 0 24px rgba(255, 107, 44, 0.28)',
+              boxShadow: '0 0 16px rgba(255, 107, 44, 0.15)',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-1px)';
-              e.currentTarget.style.boxShadow = '0 0 28px rgba(255, 107, 44, 0.35)';
+              e.currentTarget.style.boxShadow = '0 0 20px rgba(255, 107, 44, 0.2)';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 0 24px rgba(255, 107, 44, 0.28)';
+              e.currentTarget.style.boxShadow = '0 0 16px rgba(255, 107, 44, 0.15)';
             }}
           >
-            Create Yours →
+            Create My QR →
           </button>
         </div>
 
