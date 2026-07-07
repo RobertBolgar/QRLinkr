@@ -151,7 +151,7 @@ export const MessagePage: React.FC = () => {
                 backgroundColor: 'var(--color-background-surface)',
                 borderRadius: 'var(--radius-card)',
                 border: '1px solid var(--color-border)',
-                marginBottom: 'var(--spacing-4)',
+                marginBottom: 'var(--spacing-3)',
                 minHeight: isShortMessage ? '180px' : 'auto',
                 display: 'flex',
                 alignItems: 'center',
@@ -179,35 +179,30 @@ export const MessagePage: React.FC = () => {
         <div
           style={{
             width: '100%',
-            marginBottom: 'var(--spacing-3)',
-            padding: 'var(--spacing-5)',
-            backgroundColor: '#1a1a1a',
-            borderRadius: 'var(--radius-card)',
-            border: '2px solid #FF6B2C',
-            boxShadow: '0 0 20px rgba(255, 107, 44, 0.15)',
+            marginBottom: 'var(--spacing-2)',
             textAlign: 'center',
           }}
         >
           <h2
             style={{
-              fontSize: '1.25rem',
-              fontWeight: 600,
-              marginBottom: 'var(--spacing-2)',
+              fontSize: '0.9375rem',
+              fontWeight: 500,
+              marginBottom: 'var(--spacing-1)',
               fontFamily: 'var(--font-heading)',
-              color: '#FFFFFF',
+              color: 'var(--color-text-secondary)',
             }}
           >
-            ✨ Surprise Someone Else
+            Create Your Own Message
           </h2>
           <p
             style={{
-              fontSize: '0.9375rem',
-              color: 'rgba(255, 255, 255, 0.8)',
-              lineHeight: 1.5,
-              marginBottom: 'var(--spacing-4)',
+              fontSize: '0.8125rem',
+              color: 'var(--color-text-tertiary)',
+              lineHeight: 1.4,
+              marginBottom: 'var(--spacing-3)',
             }}
           >
-            Create your own free QR message in seconds.
+            Free QR messages in seconds
           </p>
           <button
             onClick={() => navigate('/')}
@@ -217,8 +212,8 @@ export const MessagePage: React.FC = () => {
               borderRadius: 'var(--radius-button)',
               fontWeight: 500,
               fontSize: '0.875rem',
-              backgroundColor: 'transparent',
-              border: '2px solid #FF6B2C',
+              backgroundColor: '#1a1a1a',
+              border: '1px solid #FF6B2C',
               color: '#FFFFFF',
               cursor: 'pointer',
               transition: 'all 200ms ease',
@@ -228,11 +223,9 @@ export const MessagePage: React.FC = () => {
               gap: 'var(--spacing-2)',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#FF6B2C';
-              e.currentTarget.style.boxShadow = '0 0 15px rgba(255, 107, 44, 0.4)';
+              e.currentTarget.style.boxShadow = '0 0 12px rgba(255, 107, 44, 0.3)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'transparent';
               e.currentTarget.style.boxShadow = 'none';
             }}
           >
@@ -246,11 +239,11 @@ export const MessagePage: React.FC = () => {
             display: 'flex',
             alignItems: 'center',
             gap: 'var(--spacing-2)',
-            fontSize: '0.8125rem',
-            color: 'var(--color-text-secondary)',
+            fontSize: '0.75rem',
+            color: 'var(--color-text-tertiary)',
           }}
         >
-          <QrCode size={12} />
+          <QrCode size={10} />
           <span>Made with QRLinkr</span>
         </div>
       </div>
