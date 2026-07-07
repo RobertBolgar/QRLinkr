@@ -1,9 +1,21 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { QRGenerator } from './components/QRGenerator';
 import { Footer } from './components/Footer';
 import { MessagePage } from './pages/MessagePage';
+import { trackPageView } from './analytics/analytics';
+
+function PageViewTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    trackPageView(location.pathname, document.title);
+  }, [location.pathname]);
+
+  return null;
+}
 
 function HomePage() {
   return (
@@ -42,10 +54,13 @@ function HomePage() {
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/message" element={<MessagePage />} />
-    </Routes>
+    <>
+      <PageViewTracker />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/message" element={<MessagePage />} />
+      </Routes>
+    </>
   );
 }
 

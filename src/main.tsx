@@ -5,6 +5,10 @@ import './styles/design-system.css'
 import './styles/base.css'
 import './styles/responsive.css'
 import App from './App.tsx'
+import { initAnalytics } from './analytics/analytics'
+
+// Initialize analytics on app startup
+initAnalytics()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
