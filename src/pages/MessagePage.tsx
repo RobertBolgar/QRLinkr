@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { MessageSquare, QrCode } from 'lucide-react';
-import { Button } from '../components/Button';
 
 /**
  * URL-safe decoding for messages
@@ -152,7 +151,7 @@ export const MessagePage: React.FC = () => {
                 backgroundColor: 'var(--color-background-surface)',
                 borderRadius: 'var(--radius-card)',
                 border: '1px solid var(--color-border)',
-                marginBottom: 'var(--spacing-5)',
+                marginBottom: 'var(--spacing-4)',
                 minHeight: isShortMessage ? '180px' : 'auto',
                 display: 'flex',
                 alignItems: 'center',
@@ -177,17 +176,68 @@ export const MessagePage: React.FC = () => {
         )}
 
         {/* CTA */}
-        <div style={{ width: '100%', marginBottom: 'var(--spacing-3)' }}>
-          <Button
-            variant="secondary"
-            onClick={() => navigate('/')}
-            style={{ width: '100%' }}
+        <div
+          style={{
+            width: '100%',
+            marginBottom: 'var(--spacing-3)',
+            padding: 'var(--spacing-5)',
+            backgroundColor: '#1a1a1a',
+            borderRadius: 'var(--radius-card)',
+            border: '2px solid #FF6B2C',
+            boxShadow: '0 0 20px rgba(255, 107, 44, 0.15)',
+            textAlign: 'center',
+          }}
+        >
+          <h2
+            style={{
+              fontSize: '1.25rem',
+              fontWeight: 600,
+              marginBottom: 'var(--spacing-2)',
+              fontFamily: 'var(--font-heading)',
+              color: '#FFFFFF',
+            }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--spacing-2)' }}>
-              <QrCode size={16} />
-              Create a QR Like This
-            </div>
-          </Button>
+            ✨ Surprise Someone Else
+          </h2>
+          <p
+            style={{
+              fontSize: '0.9375rem',
+              color: 'rgba(255, 255, 255, 0.8)',
+              lineHeight: 1.5,
+              marginBottom: 'var(--spacing-4)',
+            }}
+          >
+            Create your own free QR message in seconds.
+          </p>
+          <button
+            onClick={() => navigate('/')}
+            style={{
+              width: '100%',
+              padding: 'var(--spacing-3) var(--spacing-5)',
+              borderRadius: 'var(--radius-button)',
+              fontWeight: 500,
+              fontSize: '0.875rem',
+              backgroundColor: 'transparent',
+              border: '2px solid #FF6B2C',
+              color: '#FFFFFF',
+              cursor: 'pointer',
+              transition: 'all 200ms ease',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 'var(--spacing-2)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#FF6B2C';
+              e.currentTarget.style.boxShadow = '0 0 15px rgba(255, 107, 44, 0.4)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
+            Create Yours →
+          </button>
         </div>
 
         {/* Branding */}
