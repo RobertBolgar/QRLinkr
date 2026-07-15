@@ -3,7 +3,6 @@ import { QrCode, Globe, MessageSquare, Check, Download, Zap, Share2 } from 'luci
 import { Card } from './Card';
 import { Input } from './Input';
 import { Button } from './Button';
-import { UpgradeCard } from './UpgradeCard';
 import { QRService } from '../services/qrService';
 import { validateURL, normalizeURL } from '../utils/validation';
 
@@ -514,20 +513,6 @@ export const QRGenerator: React.FC = () => {
               )}
             </div>
 
-            {qrDataUrl && (
-              <UpgradeCard
-                title="Want to know who scans your QR code?"
-                description="Your QR code works great. If you'd like to track scans, measure traffic, and see which marketing campaigns perform best, create a free Smart Link with TubeLinkr and generate a trackable QR code."
-                features={[
-                  'Track QR scans',
-                  'Measure clicks',
-                  'Create Smart Links',
-                  'View Traffic Proof',
-                ]}
-                buttonText="Track This QR with TubeLinkr →"
-                destinationUrl="https://rob.tubelinkr.com/invite/c1"
-              />
-            )}
           </div>
         </div>
       </div>
